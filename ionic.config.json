@@ -1,0 +1,7 @@
+{
+  "name": "miRuta",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "angular"
+}
