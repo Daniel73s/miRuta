@@ -1,0 +1,79 @@
+#map {
+    width: 100%;
+    height: 100vh;
+  }
+  
+  .btn {
+    --background: #000;
+  }
+  
+  .btn-ubicacion {
+    position: absolute;
+    top: 10px;
+    left: 10px;
+  }
+  
+  .btn-capas {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+  
+  //estilo del modal
+  ion-modal#example-modal {
+    --width: fit-content;
+    --min-width: 250px;
+    --height: fit-content;
+    --border-radius: 6px;
+    --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+  }
+  
+  ion-modal#example-modal h1 {
+    margin: 20px 20px 10px 20px;
+  }
+  
+  ion-modal#example-modal ion-icon {
+    margin-right: 6px;
+  
+    width: 48px;
+    height: 48px;
+  
+    padding: 4px 0;
+  
+    color: #aaaaaa;
+  }
+  
+  ion-modal#example-modal .wrapper {
+    margin-bottom: 10px;
+    text-align: center;
+    padding: 10px;
+  }
+  
+  //estilo del marcador
+  .markerOrigen {
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #4747F4;
+  }
+  
+  .markerDestino {
+    background-size: cover;
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    cursor: pointer;
+    background-color: #7B47F4;
+  
+  }
+  
+  .buttons-modal{
+    display: flex;
+    gap: 0.5rem;
+    justify-content: center;
+    margin-bottom: 5px;
+    // border: 1px solid red;
+  }
+  

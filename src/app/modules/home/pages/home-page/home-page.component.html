@@ -1,0 +1,54 @@
+<ion-menu contentId="main-content">
+    <ion-header class="ion-no-border">
+        <ion-item lines="none" class="user-profile">
+            <ion-avatar slot="start">
+                <img src="../../../../../assets/img/user/perfil.png" alt="User Avatar">
+              </ion-avatar>              
+            <ion-label class="ion-text-wrap">
+              <h3>Daniel Luque Perez</h3>
+              <p>Administrador</p>
+            </ion-label>
+          </ion-item>
+    </ion-header>
+    <ion-content class="ion-padding">
+        <ion-list>
+            <ion-menu-toggle auto-hide="false" routerLink="/distancia">
+                <ion-item>
+                    <ion-icon slot="start" name="compass-outline"></ion-icon>
+                    <ion-label>Calcular Distancia</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" routerLink="/rutas">
+                <ion-item>
+                    <ion-icon slot="start" name="analytics-outline"></ion-icon>
+                    <ion-label>Rutas</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" routerLink="/admrutas">
+                <ion-item>
+                    <ion-icon slot="start" name="analytics-outline"></ion-icon>
+                    <ion-label>Admin Rutas</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+            <ion-menu-toggle auto-hide="false" routerLink="/puntos">
+                <ion-item>
+                    <ion-icon slot="start" name="analytics-outline"></ion-icon>
+                    <ion-label>puntos</ion-label>
+                </ion-item>
+            </ion-menu-toggle>
+        </ion-list>
+    </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+    <ion-header class="ion-no-border">
+        <ion-toolbar>
+            <ion-buttons slot="start">
+                <ion-menu-button></ion-menu-button>
+            </ion-buttons>
+            <ion-title>mi ruta</ion-title>
+        </ion-toolbar>
+    </ion-header>
+    <ion-content>
+        <router-outlet></router-outlet>
+    </ion-content>
+</div>
