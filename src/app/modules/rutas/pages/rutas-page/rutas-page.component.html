@@ -1,10 +1,41 @@
-<ion-content>
-  <!-- <ion-button (click)="export()">
-    exportar ruta
-  </ion-button> -->
+<!-- <ion-content>
   <div id="map"></div>
-  <!-- getRutas() -->
   <ion-button (click)="pruevaJson()" class="btn">
     get rutas
   </ion-button>
+</ion-content> -->
+<ion-content>
+  <ion-header class="ion-no-border">
+    <ion-toolbar>
+      <ion-title>Seleccione su linea de transporte</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+        <ion-searchbar  (ionInput)="buscar($event)" placeholder="Buscar linea" type="text" [debounce]="300"></ion-searchbar>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Lineas Registradas</ion-label>
+          </ion-list-header>
+          <ion-item *ngFor="let linea of arrlineas | filtrar:texto:'nombre'">
+            <ion-icon slot="start" name="trail-sign-outline"></ion-icon>
+            <ion-label>
+              <h3>LINEA {{linea.nombre | uppercase}}</h3>
+              <p>
+                {{linea.horario}}
+              </p>
+            </ion-label>
+            <ion-button>
+              ver linea
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 </ion-content>
