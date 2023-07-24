@@ -26,61 +26,61 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
-.mapboxgl-popup-content {
-    max-width: 500px;
-    border-radius: 10px;
-    font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
-    // background: linear-gradient(90deg, rgba(65, 16, 84, 1) 0%, rgba(46, 11, 129, 0.9612219887955182) 100%);
-background-color:transparent;
-}
+// .mapboxgl-popup-content {
+//     max-width: 500px;
+//     border-radius: 10px;
+//     font: 12px/20px 'Helvetica Neue', Arial, Helvetica, sans-serif;
+//     // background: linear-gradient(90deg, rgba(65, 16, 84, 1) 0%, rgba(46, 11, 129, 0.9612219887955182) 100%);
+// background-color:transparent;
+// }
 
-.mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
-    border-top-color: rgb(65, 16, 84);
-}
+// .mapboxgl-popup-anchor-bottom .mapboxgl-popup-tip {
+//     border-top-color: rgb(65, 16, 84);
+// }
 
-.content{
-    background-color: rgba(41, 40, 40, 0.432);
-    padding: 10px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    border-radius: 8px;
-}
-.content > h3{
-    text-align: center;
-}
-.content > img{
-    width: 150px;
-    height: 150px;
-    aspect-ratio: 1 /1;
-    object-fit: cover;
-    text-align: center;
-}
-
-
+// .content{
+//     background-color: rgba(41, 40, 40, 0.432);
+//     padding: 10px;
+//     display: flex;
+//     flex-direction: column;
+//     justify-content: center;
+//     align-items: center;
+//     border-radius: 8px;
+// }
+// .content > h3{
+//     text-align: center;
+// }
+// .content > img{
+//     width: 150px;
+//     height: 150px;
+//     aspect-ratio: 1 /1;
+//     object-fit: cover;
+//     text-align: center;
+// }
 
 
-.popup {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
-//informacion en colores de las ruras 
-.info {
-    display: flex;
-    flex-direction: column;
-    // border: 1px solid red;
-}
 
-.info .item {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-}
-.info .item >div{
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-}
+// .popup {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+// }
+
+// //informacion en colores de las ruras 
+// .info {
+//     display: flex;
+//     flex-direction: column;
+//     // border: 1px solid red;
+// }
+
+// .info .item {
+//     display: flex;
+//     gap: 1rem;
+//     align-items: center;
+// }
+// .info .item >div{
+//     width: 20px;
+//     height: 20px;
+//     border-radius: 50%;
+// }

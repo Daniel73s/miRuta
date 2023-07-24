@@ -1,0 +1,50 @@
+<ion-content *ngIf="detalle_linea">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="12"  class="ion-text-center" >
+        <ion-icon class="icono" name="analytics-outline"color="primary"></ion-icon>
+        <h3>LINEA {{detalle_linea.nombre | uppercase}}</h3>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="12">
+        <ion-list>
+          <ion-list-header>
+            <ion-label>Horario</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-icon name="time-outline" slot="start"></ion-icon>
+            <ion-label>{{detalle_linea.horario}}</ion-label>
+          </ion-item>
+          <ion-list-header>
+            <ion-label>Paradas</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-icon name="pin-outline" slot="start"></ion-icon>
+            <ion-label>{{detalle_linea.parada1.nombre}}</ion-label>
+            <ion-button fill="clear" (click)="openMapaPuntos(detalle_linea.parada1)">
+              <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-item>
+            <ion-icon name="pin-outline" slot="start"></ion-icon>
+            <ion-label>{{detalle_linea.parada2.nombre}}</ion-label>
+            <ion-button fill="clear" (click)="openMapaPuntos(detalle_linea.parada2)">
+              <ion-icon slot="icon-only" name="eye-outline"></ion-icon>
+            </ion-button>
+          </ion-item>
+          <ion-list-header>
+            <ion-label>Ruta</ion-label>
+          </ion-list-header>
+          <ion-item>
+            <ion-icon name="analytics-outline" slot="start"></ion-icon>
+            <ion-label>Graficar Rutas</ion-label>
+            <ion-button slot="end" (click)="openMapaRutas()">
+              ver ruta
+            </ion-button>
+          </ion-item>
+        </ion-list>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>

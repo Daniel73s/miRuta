@@ -1,8 +1,8 @@
 import { Component, OnInit, Renderer2 } from '@angular/core';
 import { RutasService } from 'src/app/services/rutas.service';
-import { environment } from 'src/environments/environment';
 import { saveAs } from 'file-saver';
 import { LineasService } from '../../services/lineas.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-rutas-page',
@@ -10,9 +10,9 @@ import { LineasService } from '../../services/lineas.service';
   styleUrls: ['./rutas-page.component.scss'],
 })
 export class RutasPageComponent implements OnInit {
-  public arrlineas:any[]=[];
-  public texto:string='';
-  constructor(private _lineas: LineasService, private _rutas: RutasService, private renderer: Renderer2) { }
+  public arrlineas: any[] = [];
+  public texto: string = '';
+  constructor(private _lineas: LineasService, private router: Router, private _rutas: RutasService, private renderer: Renderer2) { }
 
   ngOnInit() {
     // this._rutas.generarMapaRuta('map');
@@ -20,15 +20,19 @@ export class RutasPageComponent implements OnInit {
   }
 
   mostrarLineas() {
-    this._lineas.getlineas().then((linea:any)=>{
-      this.arrlineas=linea.lineas;
+    this._lineas.getlineas().then((linea: any) => {
+      this.arrlineas = linea.lineas;
       console.log(linea.lineas);
-      
+
     })
   }
 
-  buscar(e:any){
-    this.texto=e.target.value;
+  buscar(e: any) {
+    this.texto = e.target.value;
+  }
+
+  verlinea(id: string) {
+    this.router.navigate([`rutas/detalle-linea/${id}`]);
   }
 
   // getRutas() {

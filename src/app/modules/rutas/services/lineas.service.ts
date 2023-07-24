@@ -6,7 +6,7 @@ import { Injectable } from '@angular/core';
 })
 export class LineasService {
 
-  constructor(private http:HttpClient) { }
+  constructor(private http: HttpClient) { }
 
   getlineas() {
     return this.http.get('assets/rutas/rutas.json').toPromise();

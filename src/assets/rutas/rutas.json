@@ -1,17 +1,20 @@
 {
     "lineas": [
         {
+            "id":"1C0A1BFF-F67B-491A-BE88-4AF2B3A75273",
             "nombre": "a roja",
             "horario": "6:00 AM - 21:00 PM",
             "parada1": {
+                "nombre":"Tomatitas",
                 "lng": -64.76160493581929,
                 "lat": -21.499639974587296,
-                "img": "link de la imagen"
+                "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSVRHdDeBHeB50EYcMr8R9VJTw3A945CN00xQ&usqp=CAU"
             },
             "parada2": {
+                "nombre":"Nueva Terminal",
                 "lng": -64.67509278955596,
                 "lat": -21.559531518416094,
-                "img": "link de la imagen"
+                "img": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSe4gXXtP4EBGPtmjdT1RiK91iqE5NtoFbZ8qKXi4yJpvx-TpbWzhepGQ7iGsdXa_-cwF8&usqp=CAU"
             },
             "ruta1": {
                 "detalle": "Camino de tomatitas a la nueva terminal",
@@ -990,14 +993,17 @@
 
         },
         {
+            "id":"72EDDA7C-D0B3-40C0-8FA6-24338D31B7CD",
             "nombre": "a verde",
             "horario": "7:00 AM - 20:00 PM",
             "parada1": {
+                "nombre":"Tomatitas",
                 "lng": -64.76160493581929,
                 "lat": -21.499639974587296,
                 "img": "link de la imagen"
             },
             "parada2": {
+                "nombre":"Portillo",
                 "lng": -64.67509278955596,
                 "lat": -21.559531518416094,
                 "img": "link de la imagen"
