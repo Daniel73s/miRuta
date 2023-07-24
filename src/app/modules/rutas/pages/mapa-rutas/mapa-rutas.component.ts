@@ -10,12 +10,14 @@ import { environment } from 'src/environments/environment';
 })
 export class MapaRutasComponent implements OnInit {
   @Input()
-  parada: any
+  linea: any
   mapbox = (mapboxgl as typeof mapboxgl);
   map!: any;
   constructor(private modalCtrl: ModalController) { this.mapbox.accessToken = environment.KeyMapBox; }
 
   ngOnInit() {
+    console.log(this.linea, 'esta linea acaba de llegar al modal');
+
     this.generarMapa();
   }
 
@@ -24,33 +26,64 @@ export class MapaRutasComponent implements OnInit {
     this.map = new mapboxgl.Map({
       container: 'map',
       style: 'mapbox://sprites/mapbox/outdoors-v12',
-      zoom: 13,
+      zoom: 11,
       center: [-64.73094404403551, -21.529315024171897],
     });
     this.map.on('load', () => {
       this.map.resize();
+      // this.graficarRuta(this.linea.ruta1,1,'#5260ff');
+      this.graficarRuta(this.linea.ruta2,2,'#7B47F4','arrow');
+      // this.graficarRuta2(this.linea.ruta2);
     });
   }
-  public graficarRutas(ruta:any){
-    this.map.addLayer({
-      id: 'lineLayer',
-      type: 'line',
-      source: {
-        type: 'geojson',
-        data: {
-          type: 'Feature',
-          geometry: {
-            type: 'LineString',
-            coordinates: 'rutas',
+  public graficarRuta(ruta: any,id:number,color:string,icono:string) {
+    this.map.loadImage(
+      `assets/icon/${icono}.png`,
+      (error: any, image: any) => {
+        if (error) throw error;
+        this.map.addImage(`arrow-${id}`, image);
+        //creando el source de linea
+        this.map.addSource(`ruta${id}`, {
+          type: 'geojson',
+          data: {
+            type: 'Feature',
+            properties: {},
+            geometry: {
+              type: 'LineString',
+              coordinates: ruta.coordinates,
+            },
           },
-        },
-      },
-      paint: {
-        'line-color': 'blue',
-        'line-width': 2,
-      },
-    });
+        });
+        //adicionando al layer un source de linea
+        this.map.addLayer({
+          id: `layer${id}`,
+          type: 'line',
+          source: `ruta${id}`,
+          layout: {
+            'line-cap': 'round',
+            'line-join': 'round',
+          },
+          paint: {
+            'line-color': color,
+            'line-width': 5,
+          },
+        });
+        //mostrando el icono 
+        this.map.addLayer({
+          id: `arrow-heads-ruta${id}`,
+          type: 'symbol',
+          source: `ruta${id}`,
+          layout: {
+            'symbol-placement': 'line',
+            'symbol-spacing': 25,
+            'icon-image': `arrow-${id}`, // Nombre del ícono de flecha que previamente hayas cargado en tu Mapbox Studio
+            'icon-size': 1
+          },
+        });
+      }
+    );
   }
+
   public close() {
     this.modalCtrl.dismiss();
   }

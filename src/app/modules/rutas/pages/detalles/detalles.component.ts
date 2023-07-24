@@ -33,9 +33,13 @@ export class DetallesComponent implements OnInit {
     await modal.present();
   }
 
-  async openMapaRutas() {
+  async openMapaRutas(linea:any) {
     const modal = await this.modalCtrl.create({
-      component: MapaRutasComponent
+      component: MapaRutasComponent,
+      componentProps:{
+        linea
+      }
+
     });
     await modal.present();
   }
