@@ -4,6 +4,7 @@
             "id":"1C0A1BFF-F67B-491A-BE88-4AF2B3A75273",
             "nombre": "a roja",
             "horario": "6:00 AM - 21:00 PM",
+            "direccion":"arrow",
             "parada1": {
                 "nombre":"Tomatitas",
                 "lng": -64.76160493581929,
@@ -996,6 +997,7 @@
             "id":"72EDDA7C-D0B3-40C0-8FA6-24338D31B7CD",
             "nombre": "a verde",
             "horario": "7:00 AM - 20:00 PM",
+            "direccion":"arrow",
             "parada1": {
                 "nombre":"Tomatitas",
                 "lng": -64.76160493581929,

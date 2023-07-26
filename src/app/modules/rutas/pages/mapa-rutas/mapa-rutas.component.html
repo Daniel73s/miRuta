@@ -1,6 +1,10 @@
 <ion-button fill="solid" color="dark" shape="round" (click)="close()" class="btn-close">
   <ion-icon slot="icon-only" color="primary" name="close-outline"></ion-icon>
 </ion-button>
+<ion-button fill="solid" color="dark" shape="round" (click)="cambiarRuta()" class="btn-ruta">
+  <ion-icon slot="icon-only" color="primary" name="repeat-outline"></ion-icon>
+</ion-button>
+<ion-label class="text">LINEA {{linea.nombre | uppercase }}</ion-label>
 <div id="map">
 
 </div>
