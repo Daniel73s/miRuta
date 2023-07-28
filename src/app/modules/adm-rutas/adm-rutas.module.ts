@@ -6,10 +6,11 @@ import { AdmrutasPageComponent } from './pages/admrutas-page/admrutas-page.compo
 import { IonicModule } from '@ionic/angular';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MapaPuntosModalComponent } from './modals/mapa-puntos-modal/mapa-puntos-modal.component';
+import { MapaRutasModalComponent } from './modals/mapa-rutas-modal/mapa-rutas-modal.component';
 
 
 @NgModule({
-  declarations: [AdmrutasPageComponent,MapaPuntosModalComponent],
+  declarations: [AdmrutasPageComponent,MapaPuntosModalComponent,MapaRutasModalComponent],
   imports: [
     CommonModule,
     AdmRutasRoutingModule,
