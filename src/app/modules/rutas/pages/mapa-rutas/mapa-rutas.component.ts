@@ -1,8 +1,9 @@
 import { Component, Input, OnDestroy, OnInit, Renderer2 } from '@angular/core';
-import { LoadingController, ModalController, ToastController } from '@ionic/angular';
+import { ActionSheetController, LoadingController, ModalController, ToastController } from '@ionic/angular';
 import * as mapboxgl from 'mapbox-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
+import { Parada, Ruta, linea_transporte } from 'src/app/core/interfaces/linea.interface';
 @Component({
   selector: 'app-mapa-rutas',
   templateUrl: './mapa-rutas.component.html',
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MapaRutasComponent implements OnInit, OnDestroy {
   @Input()
-  public linea: any
+  public linea!: linea_transporte
   private mapbox = (mapboxgl as typeof mapboxgl);
   private map!: any;
   private idRuta = 1;
@@ -19,7 +20,8 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   constructor(private modalCtrl: ModalController,
     private render: Renderer2,
     private loadingCtrl: LoadingController,
-    private toastCtrl:ToastController) { this.mapbox.accessToken = environment.KeyMapBox; }
+    private toastCtrl: ToastController,
+    private actionSheetCtrl: ActionSheetController) { this.mapbox.accessToken = environment.KeyMapBox; }
 
   ngOnInit() {
     this.ubicacion();
@@ -34,6 +36,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
       style: 'mapbox://sprites/mapbox/outdoors-v12',
       zoom: 11,
       center: [-64.73094404403551, -21.529315024171897],
+      pitch: 45
     });
     this.map.on('load', () => {
       this.map.resize();
@@ -42,7 +45,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
       this.graficarParada(this.linea.parada2);
     });
   }
-  private graficarRuta(ruta: any, id: number, color: string, icono: string) {
+  private graficarRuta(ruta: Ruta, id: number, color: string, icono: string) {
     this.map.loadImage(
       `assets/icon/${icono}.png`,
       (error: any, image: any) => {
@@ -89,7 +92,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
       }
     );
   }
-  private graficarParada(parada: any) {
+  private graficarParada(parada: Parada) {
     const marker = new mapboxgl.Marker().setLngLat([parada.lng, parada.lat]).addTo(this.map);
     const popup = new mapboxgl.Popup().setHTML(
       `
@@ -123,19 +126,19 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   }
   public ubicacion() {
     Geolocation.checkPermissions().then(() => {
-      Geolocation.requestPermissions({permissions:['location']}).then(result => {
+      Geolocation.requestPermissions({ permissions: ['location'] }).then(result => {
         if (result.location == 'granted') {
           this.trackLocation();
         } else if (result.location == 'denied') {
           this.mensaje('Se denego el acceso a la ubicaicon');
         }
-      }).catch(e => { 
+      }).catch(e => {
         this.mensaje('se produjo un error al requerir los permisos de ubicacion');
-        console.log('Se produjo el error al pedir los permisos', e.message); 
+        console.log('Se produjo el error al pedir los permisos', e.message);
       })
-    }).catch(e => { 
+    }).catch(e => {
       this.mensaje('El gps esta desactivado');
-      console.log('Se produjo el error al checkear los permisos', e.message); 
+      console.log('Se produjo el error al checkear los permisos', e.message);
     })
   }
   private location() {
@@ -217,11 +220,65 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
     this.stopTrackingLocation();
   }
 
-  async mensaje(message:string) {
+  async mensaje(message: string) {
     const toast = await this.toastCtrl.create({
       message,
       duration: 2000
     });
     toast.present();
+  }
+
+  changeStyleMap(mode: string) {
+    this.map.setStyle(mode);
+    if (this.idRuta == 1) {
+      this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
+      this.idRuta = 2;
+    } else {
+      this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.direccion);
+      this.idRuta = 1;
+    }
+  }
+
+
+
+  async presentActionSheet() {
+    const actionSheet = await this.actionSheetCtrl.create({
+      header: 'Cambiar Mapa', 
+      buttons: [
+        {
+          text: 'Sprites',
+          handler: () => {
+            this.changeStyleMap('mapbox://sprites/mapbox/outdoors-v12');
+          }
+        },
+        {
+          text: 'Satelital',
+          handler: () => {
+            this.changeStyleMap('mapbox://styles/mapbox/satellite-streets-v12');
+          }
+        },
+        {
+          text: 'Dark',
+          handler: () => {
+            this.changeStyleMap('mapbox://styles/mapbox/dark-v11');
+          }
+        }, 
+        {
+          text: 'Light',
+          handler: () => {
+            this.changeStyleMap('mapbox://styles/mapbox/light-v11');
+          }
+        }, 
+        {
+          text: 'Cancel',
+          icon: 'close',
+          role: 'cancel',
+          handler: () => {
+            console.log('Cancel clicked');
+          }
+        }]
+    });
+
+    await actionSheet.present();
   }
 }

@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ModalController } from '@ionic/angular';
 import * as mapboxgl from 'mapbox-gl';
+import { Parada } from 'src/app/core/interfaces/linea.interface';
 // import * as turf from '@turf/turf';
 import { environment } from 'src/environments/environment';
 @Component({
@@ -10,7 +11,7 @@ import { environment } from 'src/environments/environment';
 })
 export class MapaPuntosComponent implements OnInit {
   @Input()
-  parada: any
+  parada!: Parada;
   mapbox = (mapboxgl as typeof mapboxgl);
   map!: any;
   constructor(private modalCtrl: ModalController) {
@@ -42,6 +43,29 @@ export class MapaPuntosComponent implements OnInit {
       );
       marker.setPopup(Popup);
       marker.togglePopup();
+
+      // Agrega un nuevo marcador en la posición actual
+      this.map.addSource('location-source', {
+        type: 'geojson',
+        data: {
+          type: 'Feature',
+          geometry: {
+            type: 'Point',
+            coordinates: [this.parada.lng, this.parada.lat],
+          },
+        },
+      });
+
+      this.map.addLayer({
+        id: 'wave',
+        type: 'circle',
+        source: 'location-source',
+        paint: {
+          'circle-radius': 50,
+          'circle-opacity': 0.5,
+          'circle-color': '#7B47F4',
+        },
+      });
     });
   }
 

@@ -7,6 +7,7 @@ import { ModalController } from '@ionic/angular';
 import { MapaPuntosModalComponent } from '../../modals/mapa-puntos-modal/mapa-puntos-modal.component';
 import { MapaRutasModalComponent } from '../../modals/mapa-rutas-modal/mapa-rutas-modal.component';
 import { MapaRutasComponent } from 'src/app/modules/rutas/pages/mapa-rutas/mapa-rutas.component';
+import { linea_transporte } from 'src/app/core/interfaces/linea.interface';
 
 @Component({
   selector: 'app-admrutas-page',
@@ -59,13 +60,11 @@ export class AdmrutasPageComponent implements OnInit {
   }
 
   public async crear() {
-    let datos = this.formLinea.getRawValue();
+    let datos:linea_transporte = this.formLinea.getRawValue();
     let { horainicio, horafin } = this.formLinea.getRawValue();
     datos.horainicio = this.format_Hora(horainicio);
     datos.horafin = this.format_Hora(horafin);
-    console.log(datos);
     console.log( JSON.stringify(datos));
-    
     const modal=await this.modalCtrl.create({
       component:MapaRutasComponent,
       componentProps:{linea:datos}
@@ -86,7 +85,6 @@ export class AdmrutasPageComponent implements OnInit {
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
     if (role === 'confirm') {
-      console.log(data, 'lng y lat desde el modal');
       if (data.parada == 'p1') {
         this.formLinea.get('parada1.lng')?.patchValue(data.lng);
         this.formLinea.get('parada1.lat')?.patchValue(data.lat);

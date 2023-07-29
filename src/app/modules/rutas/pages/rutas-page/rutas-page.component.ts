@@ -3,6 +3,7 @@ import { RutasService } from 'src/app/services/rutas.service';
 import { saveAs } from 'file-saver';
 import { LineasService } from '../../services/lineas.service';
 import { Router } from '@angular/router';
+import { linea_transporte } from 'src/app/core/interfaces/linea.interface';
 
 @Component({
   selector: 'app-rutas-page',
@@ -10,21 +11,18 @@ import { Router } from '@angular/router';
   styleUrls: ['./rutas-page.component.scss'],
 })
 export class RutasPageComponent implements OnInit {
-  public arrlineas: any[] = [];
+  public arrlineas: linea_transporte[] = [];
   public texto: string = '';
   constructor(private _lineas: LineasService, private router: Router, private _rutas: RutasService, private renderer: Renderer2) { }
 
   ngOnInit() {
-    // this._rutas.generarMapaRuta('map');
     this.mostrarLineas();
   }
 
   mostrarLineas() {
-    this._lineas.getlineas().then((linea: any) => {
-      this.arrlineas = linea.lineas;
-      console.log(linea.lineas);
-
-    })
+    this._lineas.getlineas().then((linea: linea_transporte[]) => {
+      this.arrlineas = linea;
+    });
   }
 
   buscar(e: any) {
@@ -34,34 +32,6 @@ export class RutasPageComponent implements OnInit {
   verlinea(id: string) {
     this.router.navigate([`rutas/detalle-linea/${id}`]);
   }
-
-  // getRutas() {
-  //   this._rutas.getRutas().then((ruta: any) => {
-  //     const coordenadasRuta1 = this.buscarPropiedad(ruta, 'Linea-A', 'A-Roja', 'ruta1', 'coordinates');
-  //     const coordenadasRuta2 = this.buscarPropiedad(ruta, 'Linea-A', 'A-Roja', 'ruta2', 'coordinates');
-  //     const inicio = this.buscarPropiedad(ruta, 'Linea-A', 'A-Roja', 'inicio_parada');
-  //     const fin = this.buscarPropiedad(ruta, 'Linea-A', 'A-Roja', 'fin_parada');
-  //     //creando elementos html
-  //     const parada1 = this.renderer.createElement('img');
-  //     const parada2 = this.renderer.createElement('img');
-  //     this.renderer.setProperty(parada1, 'src', './assets/img/maps/dark.png');
-  //     this.renderer.addClass(parada1, 'parada');
-
-  //     this.renderer.setProperty(parada2, 'src', './assets/img/maps/light.png');
-  //     this.renderer.addClass(parada2, 'parada');
-
-  //     //creando geojson 
-  //     const coordenadas1 = this.crearGeojson(coordenadasRuta1);
-  //     const coordenadas2 = this.crearGeojson(coordenadasRuta2);
-  //     this._rutas.printRuta(coordenadas1, 'inicio', environment.colorPrimary).then(() => {
-  //       this._rutas.createMarkerParadas(inicio, fin, parada1, parada2);
-  //       this._rutas.zoomMap(12);
-  //       this._rutas.printRuta(coordenadas2, 'fin', environment.colorSecondary).catch(e => { console.log('se genero el siguiente error ' + e.message); })
-  //     }).catch(e => {
-  //       console.log('se genero el siguiente error ' + e.message);
-  //     });
-  //   });
-  // }
 
   //Metodo para acceder a las propiedades del objeto
   buscarPropiedad(obj: any, ...props: string[]): any {

@@ -4,6 +4,7 @@ import { LineasService } from '../../services/lineas.service';
 import { ModalController } from '@ionic/angular';
 import { MapaPuntosComponent } from '../mapa-puntos/mapa-puntos.component';
 import { MapaRutasComponent } from '../mapa-rutas/mapa-rutas.component';
+import { Parada, linea_transporte } from 'src/app/core/interfaces/linea.interface';
 
 @Component({
   selector: 'app-detalles',
@@ -11,19 +12,21 @@ import { MapaRutasComponent } from '../mapa-rutas/mapa-rutas.component';
   styleUrls: ['./detalles.component.scss'],
 })
 export class DetallesComponent implements OnInit {
-  public detalle_linea: any;
-  constructor(private modalCtrl: ModalController, private route: ActivatedRoute, private _lineas: LineasService) {
+  public detalle_linea?: linea_transporte;
+  constructor(private modalCtrl: ModalController, 
+              private route: ActivatedRoute, 
+              private _lineas: LineasService) {
   }
 
   ngOnInit() {
     const id: string | null = this.route.snapshot.paramMap.get('id');
-    this._lineas.getlineas().then((linea: any) => {
-      this.detalle_linea = linea.lineas.find((l: any) => l.id === id);
+    this._lineas.getlineas().then((linea:linea_transporte[]) => {
+      this.detalle_linea = linea.find((l: linea_transporte) => l.id === id);
       console.log(this.detalle_linea);
     });
   }
 
-  async openMapaPuntos(parada:any) {
+  async openMapaPuntos(parada:Parada) {
     const modal = await this.modalCtrl.create({
       component: MapaPuntosComponent,
       componentProps:{
@@ -33,7 +36,7 @@ export class DetallesComponent implements OnInit {
     await modal.present();
   }
 
-  async openMapaRutas(linea:any) {
+  async openMapaRutas(linea:linea_transporte) {
     const modal = await this.modalCtrl.create({
       component: MapaRutasComponent,
       componentProps:{

@@ -5,6 +5,9 @@
   <ion-icon slot="icon-only" color="primary" name="repeat-outline"></ion-icon>
 </ion-button>
 <ion-label class="text">LINEA {{linea.nombre | uppercase }}</ion-label>
+<ion-button (click)="presentActionSheet()" color="dark" shape="round" class="btn-mapas">
+  <ion-icon name="layers-outline" color="primary" slot="icon-only"></ion-icon>
+</ion-button>
 <div id="map">
 
 </div>

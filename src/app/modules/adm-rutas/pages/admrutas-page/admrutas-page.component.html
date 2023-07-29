@@ -1,141 +1,212 @@
-<ion-content>
+<ion-content color="light">
   <!-- <ion-button (click)="export()">
     exportar ruta
   </ion-button>
   <div id="map"></div> -->
   <ion-header class="ion-no-border">
-    <ion-toolbar>
+    <ion-toolbar color="light">
       <ion-title>Crear nueva linea</ion-title>
     </ion-toolbar>
   </ion-header>
   <ion-grid fixed>
     <form [formGroup]="formLinea">
+      <!-- primera fila -->
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="stacked">Id (Autogenerado)</ion-label>
+            <ion-input formControlName="id" readonly></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+          <ion-item>
+            <ion-label position="stacked">Nombre Linea</ion-label>
+            <ion-input formControlName="nombre" placeholder="ingrese solo el nombre de la linea"></ion-input>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- segunda fila -->
+      <ion-row>
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
+          <ion-item>
+            <ion-label>Hora Inicio</ion-label>
+            <ion-datetime-button slot="end" datetime="inicio"></ion-datetime-button>
+          </ion-item>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="inicio" formControlName="horainicio" presentation="time" hour-cycle="h11"
+                minute-values="[0,15,30,45]">
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
+          <ion-item>
+            <ion-label>Hora Fin</ion-label>
+            <ion-datetime-button slot="end" datetime="fin"></ion-datetime-button>
+          </ion-item>
+          <ion-modal [keepContentsMounted]="true">
+            <ng-template>
+              <ion-datetime id="fin" formControlName="horafin" presentation="time" hour-cycle="h11"
+                minute-values="[0,15,30,45]">
+              </ion-datetime>
+            </ng-template>
+          </ion-modal>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
+          <ion-item>
+            <ion-label>Direccion</ion-label>
+            <ion-select placeholder="Direccion" slot="end" formControlName="direccion">
+              <ion-select-option value="arrow">Arrow</ion-select-option>
+              <ion-select-option value="arrow-2">Arrow-2</ion-select-option>
+            </ion-select>
+          </ion-item>
+        </ion-col>
+      </ion-row>
+      <!-- tercera fila -->
       <ion-row>
         <ion-col size="12">
-          <ion-list>
-            <ion-list-header>
-              <ion-label>Informacion General</ion-label>
-            </ion-list-header>
-            <ion-item>
-              <ion-label>id:</ion-label>
-              <ion-input formControlName="id" readonly></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Nombre Linea</ion-label>
-              <ion-input formControlName="nombre"></ion-input>
-            </ion-item>
-            <ion-item>
-              <ion-label>Hora Inicio</ion-label>
-              <ion-datetime-button slot="end" datetime="inicio"></ion-datetime-button>
-            </ion-item>
-            <ion-modal [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime id="inicio" formControlName="horainicio" presentation="time" hour-cycle="h11"
-                  minute-values="[0,15,30,45]">
-                </ion-datetime>
-              </ng-template>
-            </ion-modal>
-            <ion-item>
-              <ion-label>Hora Fin</ion-label>
-              <ion-datetime-button slot="end" datetime="fin"></ion-datetime-button>
-            </ion-item>
-            <ion-modal [keepContentsMounted]="true">
-              <ng-template>
-                <ion-datetime id="fin" formControlName="horafin" presentation="time" hour-cycle="h11"
-                  minute-values="[0,15,30,45]">
-                </ion-datetime>
-              </ng-template>
-            </ion-modal>
-            <ion-item>
-              <ion-label>Direccion</ion-label>
-              <ion-select placeholder="Direccion" slot="end" formControlName="direccion">
-                <ion-select-option value="arrow">Arrow</ion-select-option>
-                <ion-select-option value="arrow-2">Arrow-2</ion-select-option>
-              </ion-select>
-            </ion-item>
-            <div formGroupName="parada1">
+          <div formGroupName="parada1">
+            <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de parada 1</ion-label>
-                <ion-button (click)="openMapaPuntos('p1')">abrir mapa</ion-button>
+                <ion-button (click)="openMapaPuntos('p1')">crear punto</ion-button>
               </ion-list-header>
-              <ion-item>
-                <ion-label>Nombre de  parada:</ion-label>
-                <ion-input formControlName="nombre"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Url de imagen:</ion-label>
-                <ion-input formControlName="img"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Latitud:</ion-label>
-                <ion-input type="text"  readonly formControlName="lat"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Longitud:</ion-label>
-                <ion-input type="text" readonly formControlName="lng"></ion-input>
-              </ion-item>
-            </div>
-            <div formGroupName="parada2">
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Nombre de parada:</ion-label>
+                    <ion-input formControlName="nombre" placeholder="Nombre de parada 1"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Url de imagen:</ion-label>
+                    <ion-input formControlName="img" placeholder="Link de imagen"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Latitud:</ion-label>
+                    <ion-input type="text" readonly formControlName="lat" placeholder="(Autocompletado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Longitud:</ion-label>
+                    <ion-input type="text" readonly formControlName="lng" placeholder="(Autocompletado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!-- cuarta fila -->
+      <ion-row>
+        <ion-col size="12">
+          <div formGroupName="parada2">
+            <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de parada 2</ion-label>
-                <ion-button (click)="openMapaPuntos('p2')">abrir mapa</ion-button>
+                <ion-button (click)="openMapaPuntos('p2')">crear punto</ion-button>
               </ion-list-header>
-              <ion-item>
-                <ion-label>Nombre de  parada:</ion-label>
-                <ion-input formControlName="nombre"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Url de imagen:</ion-label>
-                <ion-input formControlName="img"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Latitud:</ion-label>
-                <ion-input type="text"  readonly formControlName="lat"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Longitud:</ion-label>
-                <ion-input type="text" readonly formControlName="lng"></ion-input>
-              </ion-item>
-            </div>
-            <ion-list-header>
-              <ion-label>Ruta1</ion-label>
-              <ion-button (click)="openMapaRutas('r1')">
-                crear ruta
-              </ion-button>
-            </ion-list-header>
-            <div formGroupName="ruta1">
-              <ion-item>
-                <ion-label>detalle:</ion-label>
-                <ion-input formControlName="detalle"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Ruta:</ion-label>
-                <ion-input readonly formControlName="coordinates"></ion-input>
-              </ion-item>
-            </div>
-            <ion-list-header>
-              <ion-label>Ruta2</ion-label>
-              <ion-button (click)="openMapaRutas('r2')">
-                crear ruta
-              </ion-button>
-            </ion-list-header>
-            <div formGroupName="ruta2">
-              <ion-item>
-                <ion-label>detalle:</ion-label>
-                <ion-input formControlName="detalle"></ion-input>
-              </ion-item>
-              <ion-item>
-                <ion-label>Ruta:</ion-label>
-                <ion-input readonly formControlName="coordinates"></ion-input>
-              </ion-item>
-            </div>
-          </ion-list>
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Nombre de parada:</ion-label>
+                    <ion-input formControlName="nombre" placeholder="Nombre de parada 2"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Url de imagen:</ion-label>
+                    <ion-input formControlName="img" placeholder="Link de imagen"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Latitud:</ion-label>
+                    <ion-input type="text" readonly formControlName="lat" placeholder="(Autocompletado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Longitud:</ion-label>
+                    <ion-input type="text" readonly formControlName="lng" placeholder="(Autocompletado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!-- quinta fila  -->
+      <ion-row>
+        <ion-col size="12">
+          <div formGroupName="ruta1">
+            <ion-list>
+              <ion-list-header>
+                <ion-label>Informacion de Ruta1</ion-label>
+                <ion-button (click)="openMapaRutas('r1')">
+                  crear ruta
+                </ion-button>
+              </ion-list-header>
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Detalle:</ion-label>
+                    <ion-input formControlName="detalle" placeholder="Detalles sobre la ruta"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Ruta:</ion-label>
+                    <ion-input readonly formControlName="coordinates" placeholder="(Autogenerado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </div>
+        </ion-col>
+      </ion-row>
+      <!-- sexta fila -->
+      <ion-row>
+        <ion-col size="12">
+          <div formGroupName="ruta2">
+            <ion-list>
+              <ion-list-header>
+                <ion-label>Informacion de Ruta2</ion-label>
+                <ion-button (click)="openMapaRutas('r2')">
+                  crear ruta
+                </ion-button>
+              </ion-list-header>
+              <ion-row>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Detalle</ion-label>
+                    <ion-input formControlName="detalle" placeholder="Detalles sobre la ruta"></ion-input>
+                  </ion-item>
+                </ion-col>
+                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                  <ion-item>
+                    <ion-label position="stacked">Ruta</ion-label>
+                    <ion-input readonly formControlName="coordinates" placeholder="(Autogenerado)"></ion-input>
+                  </ion-item>
+                </ion-col>
+              </ion-row>
+            </ion-list>
+          </div>
         </ion-col>
       </ion-row>
       <ion-row>
         <ion-col size="12">
           <ion-button (click)="crear()" [disabled]="formLinea.invalid">
-            Crear Linea
+            vista previa 
           </ion-button>
         </ion-col>
       </ion-row>
