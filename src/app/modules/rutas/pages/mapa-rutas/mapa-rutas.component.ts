@@ -33,16 +33,22 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   private generarMapa() {
     this.map = new mapboxgl.Map({
       container: 'map',
-      style: 'mapbox://sprites/mapbox/outdoors-v12',
+      style: 'mapbox://styles/mapbox/streets-v12',
       zoom: 11,
       center: [-64.73094404403551, -21.529315024171897],
       pitch: 45
     });
     this.map.on('load', () => {
       this.map.resize();
-      this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
       this.graficarParada(this.linea.parada1);
       this.graficarParada(this.linea.parada2);
+    });
+    this.map.on('style.load', () => {
+      if (this.idRuta == 1) {
+        this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
+      } else {
+        this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.direccion);
+      }
     });
   }
   private graficarRuta(ruta: Ruta, id: number, color: string, icono: string) {
@@ -230,25 +236,16 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
 
   changeStyleMap(mode: string) {
     this.map.setStyle(mode);
-    if (this.idRuta == 1) {
-      this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
-      this.idRuta = 2;
-    } else {
-      this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.direccion);
-      this.idRuta = 1;
-    }
   }
-
-
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
-      header: 'Cambiar Mapa', 
+      header: 'Cambiar Mapa',
       buttons: [
         {
-          text: 'Sprites',
+          text: 'Streets',
           handler: () => {
-            this.changeStyleMap('mapbox://sprites/mapbox/outdoors-v12');
+            this.changeStyleMap('mapbox://styles/mapbox/streets-v12');
           }
         },
         {
@@ -262,13 +259,13 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
           handler: () => {
             this.changeStyleMap('mapbox://styles/mapbox/dark-v11');
           }
-        }, 
+        },
         {
           text: 'Light',
           handler: () => {
             this.changeStyleMap('mapbox://styles/mapbox/light-v11');
           }
-        }, 
+        },
         {
           text: 'Cancel',
           icon: 'close',

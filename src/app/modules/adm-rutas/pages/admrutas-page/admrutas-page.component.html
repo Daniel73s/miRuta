@@ -1,8 +1,4 @@
 <ion-content color="light">
-  <!-- <ion-button (click)="export()">
-    exportar ruta
-  </ion-button>
-  <div id="map"></div> -->
   <ion-header class="ion-no-border">
     <ion-toolbar color="light">
       <ion-title>Crear nueva linea</ion-title>
@@ -206,10 +202,18 @@
       <ion-row>
         <ion-col size="12">
           <ion-button (click)="crear()" [disabled]="formLinea.invalid">
-            vista previa 
+            <ion-icon name="eye-outline" slot="icon-only"></ion-icon> &nbsp; vista previa 
+          </ion-button>
+          <ion-button [disabled]="formLinea.invalid" color="success" (click)="export()">
+            <ion-icon name="checkmark-circle-outline" slot="icon-only"></ion-icon> &nbsp;generar json
           </ion-button>
         </ion-col>
       </ion-row>
     </form>
+    <ion-row>
+      <ion-col size="12">
+        
+      </ion-col>
+    </ion-row>
   </ion-grid>
 </ion-content>

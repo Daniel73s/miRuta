@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { RutasService } from 'src/app/services/rutas.service';
 import { v4 as uuidv4 } from 'uuid';
 import { format } from 'date-fns';
-import { ModalController } from '@ionic/angular';
+import { ModalController, Platform } from '@ionic/angular';
 import { MapaPuntosModalComponent } from '../../modals/mapa-puntos-modal/mapa-puntos-modal.component';
 import { MapaRutasModalComponent } from '../../modals/mapa-rutas-modal/mapa-rutas-modal.component';
 import { MapaRutasComponent } from 'src/app/modules/rutas/pages/mapa-rutas/mapa-rutas.component';
@@ -17,7 +17,7 @@ import { linea_transporte } from 'src/app/core/interfaces/linea.interface';
 export class AdmrutasPageComponent implements OnInit {
 
   public formLinea: FormGroup;
-  constructor(private _rutas: RutasService, private fb: FormBuilder, private modalCtrl: ModalController) {
+  constructor(private _rutas: RutasService, private platform: Platform, private fb: FormBuilder, private modalCtrl: ModalController) {
     this.formLinea = new FormGroup('');
   }
   ngOnInit() {
@@ -46,11 +46,11 @@ export class AdmrutasPageComponent implements OnInit {
         lat: ['', [Validators.required]],
         img: ['', [Validators.required]]
       }),
-      ruta1:this.fb.group({
+      ruta1: this.fb.group({
         detalle: ['', [Validators.required]],
         coordinates: [[], [Validators.required]],
       }),
-      ruta2:this.fb.group({
+      ruta2: this.fb.group({
         detalle: ['', [Validators.required]],
         coordinates: [[], [Validators.required]],
       })
@@ -60,14 +60,14 @@ export class AdmrutasPageComponent implements OnInit {
   }
 
   public async crear() {
-    let datos:linea_transporte = this.formLinea.getRawValue();
+    let datos: linea_transporte = this.formLinea.getRawValue();
     let { horainicio, horafin } = this.formLinea.getRawValue();
     datos.horainicio = this.format_Hora(horainicio);
     datos.horafin = this.format_Hora(horafin);
-    console.log( JSON.stringify(datos));
-    const modal=await this.modalCtrl.create({
-      component:MapaRutasComponent,
-      componentProps:{linea:datos}
+    console.log(JSON.stringify(datos));
+    const modal = await this.modalCtrl.create({
+      component: MapaRutasComponent,
+      componentProps: { linea: datos }
     });
     await modal.present();
   }
@@ -112,6 +112,25 @@ export class AdmrutasPageComponent implements OnInit {
     }
   }
   public export() {
-    this._rutas.exportToTxt();
+    // this._rutas.exportToTxt();
+    let datos: linea_transporte = this.formLinea.getRawValue();
+    let { horainicio, horafin } = this.formLinea.getRawValue();
+    datos.horainicio = this.format_Hora(horainicio);
+    datos.horafin = this.format_Hora(horafin);
+    const jsonString = JSON.stringify(datos);
+
+    const fileName = 'datos.txt';
+    const blob = new Blob([jsonString], { type: 'text/plain' });
+
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = fileName;
+    a.click();
+    URL.revokeObjectURL(url);
+    console.log('Archivo descargado automáticamente en el escritorio.');
   }
+
 }
+
+
