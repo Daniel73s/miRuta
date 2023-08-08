@@ -1,19 +1,19 @@
 import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 import { IonicModule } from '@ionic/angular';
 
-import { EditarRutaComponent } from './editar-ruta.component';
+import { EditarLineaComponent } from './editar-linea.component';
 
-describe('EditarRutaComponent', () => {
-  let component: EditarRutaComponent;
-  let fixture: ComponentFixture<EditarRutaComponent>;
+describe('EditarLineaComponent', () => {
+  let component: EditarLineaComponent;
+  let fixture: ComponentFixture<EditarLineaComponent>;
 
   beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditarRutaComponent ],
+      declarations: [ EditarLineaComponent ],
       imports: [IonicModule.forRoot()]
     }).compileComponents();
 
-    fixture = TestBed.createComponent(EditarRutaComponent);
+    fixture = TestBed.createComponent(EditarLineaComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   }));

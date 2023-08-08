@@ -9,15 +9,22 @@ import { PipesModule } from 'src/app/core/pipes/pipes.module';
 import { DetallesComponent } from './pages/detalles/detalles.component';
 import { MapaPuntosComponent } from './pages/mapa-puntos/mapa-puntos.component';
 import { MapaRutasComponent } from './pages/mapa-rutas/mapa-rutas.component';
+import { EditarLineaComponent } from './pages/editar-linea/editar-linea.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
-  declarations: [RutasPageComponent,DetallesComponent,MapaPuntosComponent,MapaRutasComponent],
+  declarations: [RutasPageComponent,
+    DetallesComponent,
+    MapaPuntosComponent,
+    MapaRutasComponent,
+  EditarLineaComponent],
   imports: [
     CommonModule,
     RutasRoutingModule,
     IonicModule,
     HttpClientModule,
-    PipesModule
+    PipesModule,
+    ReactiveFormsModule
   ]
 })
 export class RutasModule { }

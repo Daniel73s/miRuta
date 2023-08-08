@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { LineasService } from '../../services/lineas.service';
 import { ModalController } from '@ionic/angular';
 import { MapaPuntosComponent } from '../mapa-puntos/mapa-puntos.component';
@@ -15,14 +15,14 @@ export class DetallesComponent implements OnInit {
   public detalle_linea?: linea_transporte;
   constructor(private modalCtrl: ModalController, 
               private route: ActivatedRoute, 
-              private _lineas: LineasService) {
+              private _lineas: LineasService,
+              private router:Router) {
   }
 
   ngOnInit() {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     this._lineas.getlineas().then((linea:linea_transporte[]) => {
       this.detalle_linea = linea.find((l: linea_transporte) => l.id === id);
-      console.log(this.detalle_linea);
     });
   }
 
@@ -45,5 +45,9 @@ export class DetallesComponent implements OnInit {
 
     });
     await modal.present();
+  }
+
+  editar_linea(id:string){
+      this.router.navigate([`/rutas/editar/${id}`])
   }
 }

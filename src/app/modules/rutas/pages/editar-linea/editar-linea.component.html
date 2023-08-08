@@ -1,12 +1,4 @@
-<ion-content color="light">
-  <ion-header class="ion-no-border">
-    <ion-toolbar color="light">
-      <ion-title>Crear nueva linea</ion-title>
-      <ion-button slot="end" fill="clear" [routerLink]="['/admrutas/editar']">
-        Editar linea
-      </ion-button>
-    </ion-toolbar>
-  </ion-header>
+<ion-content>
   <ion-grid fixed>
     <form [formGroup]="formLinea">
       <!-- primera fila -->
@@ -15,6 +7,9 @@
           <ion-item>
             <ion-label position="stacked">Id (Autogenerado)</ion-label>
             <ion-input formControlName="id" readonly></ion-input>
+            <ion-button slot="end" fill="clear" (click)="generarnuevoid()">
+              <ion-icon name="refresh-outline" slot="icon-only"></ion-icon>
+            </ion-button>
           </ion-item>
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -33,8 +28,11 @@
           </ion-item>
           <ion-modal [keepContentsMounted]="true">
             <ng-template>
-              <ion-datetime id="inicio" formControlName="horainicio" presentation="time" hour-cycle="h11"
-                minute-values="[0,15,30,45]">
+              <ion-datetime formControlName="horainicio"
+                            id="inicio"  
+                            presentation="time"
+                            minute-values="[0,15,30,45]"
+                            hour-cycle="h11">
               </ion-datetime>
             </ng-template>
           </ion-modal>
@@ -69,7 +67,7 @@
             <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de parada 1</ion-label>
-                <ion-button (click)="openMapaPuntos('p1')">crear punto</ion-button>
+                <ion-button (click)="openModalPuntos('p1')">modificar punto</ion-button>
               </ion-list-header>
               <ion-row>
                 <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -110,7 +108,7 @@
             <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de parada 2</ion-label>
-                <ion-button (click)="openMapaPuntos('p2')">crear punto</ion-button>
+                <ion-button (click)="openModalPuntos('p2')">modificar punto</ion-button>
               </ion-list-header>
               <ion-row>
                 <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
@@ -151,8 +149,8 @@
             <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de Ruta1</ion-label>
-                <ion-button (click)="openMapaRutas('r1')">
-                  crear ruta
+                <ion-button (click)="openModalRutas('ruta1')">
+                  modificar ruta
                 </ion-button>
               </ion-list-header>
               <ion-row>
@@ -180,8 +178,8 @@
             <ion-list>
               <ion-list-header>
                 <ion-label>Informacion de Ruta2</ion-label>
-                <ion-button (click)="openMapaRutas('r2')">
-                  crear ruta
+                <ion-button (click)="openModalRutas('ruta2')">
+                  modificar ruta
                 </ion-button>
               </ion-list-header>
               <ion-row>
@@ -202,12 +200,13 @@
           </div>
         </ion-col>
       </ion-row>
+      <!-- fila botones -->
       <ion-row>
         <ion-col size="12">
-          <ion-button (click)="crear()" [disabled]="formLinea.invalid">
-            <ion-icon name="eye-outline" slot="icon-only"></ion-icon> &nbsp; vista previa 
+          <ion-button (click)="vistaprevia()" [disabled]="formLinea.invalid">
+            <ion-icon name="eye-outline" slot="icon-only"></ion-icon> &nbsp; vista previa
           </ion-button>
-          <ion-button [disabled]="formLinea.invalid" color="success" (click)="export()">
+          <ion-button (click)="export()" [disabled]="formLinea.invalid" color="success">
             <ion-icon name="checkmark-circle-outline" slot="icon-only"></ion-icon> &nbsp;generar json
           </ion-button>
         </ion-col>
@@ -215,7 +214,7 @@
     </form>
     <ion-row>
       <ion-col size="12">
-        
+
       </ion-col>
     </ion-row>
   </ion-grid>

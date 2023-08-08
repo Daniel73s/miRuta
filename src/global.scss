@@ -26,6 +26,14 @@
 @import "~@ionic/angular/css/flex-utils.css";
 
 
+@media (width >= 800px) {
+    ion-modal {
+        --width: 80%; /* Ancho personalizado */
+        --height: 80%; /* Alto personalizado */
+      }
+  }
+  
+
 // .mapboxgl-popup-content {
 //     max-width: 500px;
 //     border-radius: 10px;

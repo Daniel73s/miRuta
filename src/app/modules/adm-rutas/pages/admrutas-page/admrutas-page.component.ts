@@ -26,7 +26,6 @@ export class AdmrutasPageComponent implements OnInit {
     // console.log('Nuevo UUID:', newUUID);
     this.formInit();
   }
-
   private formInit() {
     this.formLinea = this.fb.group({
       id: ['', [Validators.required]],
@@ -58,7 +57,6 @@ export class AdmrutasPageComponent implements OnInit {
     //asignandole un id a la linea
     this.formLinea.patchValue({ id: uuidv4() });
   }
-
   public async crear() {
     let datos: linea_transporte = this.formLinea.getRawValue();
     let { horainicio, horafin } = this.formLinea.getRawValue();
@@ -71,34 +69,44 @@ export class AdmrutasPageComponent implements OnInit {
     });
     await modal.present();
   }
-
   private format_Hora(hora: string): string {
     const mod = format(new Date(hora), 'h:mm a');
     return mod;
   }
-
-  async openMapaPuntos(parada: string) {
+  async openMapaPuntos(tipo: string) {
     const modal = await this.modalCtrl.create({
       component: MapaPuntosModalComponent,
-      componentProps: { parada }
+      componentProps: { 
+        parada:{
+          tipo,
+          coords:{
+            lat:'',
+            lng:''
+          }
+        } 
+      }
     });
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
     if (role === 'confirm') {
-      if (data.parada == 'p1') {
-        this.formLinea.get('parada1.lng')?.patchValue(data.lng);
-        this.formLinea.get('parada1.lat')?.patchValue(data.lat);
+      if (data.tipo == 'p1') {
+        this.formLinea.get('parada1.lng')?.patchValue(data.coords.lng);
+        this.formLinea.get('parada1.lat')?.patchValue(data.coords.lat);
       } else {
-        this.formLinea.get('parada2.lng')?.patchValue(data.lng);
-        this.formLinea.get('parada2.lat')?.patchValue(data.lat);
+        this.formLinea.get('parada2.lng')?.patchValue(data.coords.lng);
+        this.formLinea.get('parada2.lat')?.patchValue(data.coords.lat);
       }
     }
   }
-
   async openMapaRutas(ruta: string) {
+    const linea=this.formLinea.getRawValue();
     const modal = await this.modalCtrl.create({
       component: MapaRutasModalComponent,
-      componentProps: { ruta }
+      componentProps: { 
+        ruta,
+        parada1:linea.parada1,
+        parada2:linea.parada2
+      }
     });
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
@@ -130,7 +138,6 @@ export class AdmrutasPageComponent implements OnInit {
     URL.revokeObjectURL(url);
     console.log('Archivo descargado automáticamente en el escritorio.');
   }
-
 }
 
 
