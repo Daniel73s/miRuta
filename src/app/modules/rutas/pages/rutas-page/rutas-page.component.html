@@ -25,10 +25,11 @@
           <ion-item *ngFor="let linea of arrlineas | filtrar:texto:'nombre'">
             <ion-icon slot="start" name="trail-sign-outline"></ion-icon>
             <ion-label>
-              <h3>LINEA {{linea.nombre | uppercase}}</h3>
+              <h3>{{linea.categoria | uppercase}} - {{linea.nombre | uppercase}}</h3>
               <p>
                 {{linea.horainicio}} - {{linea.horafin}}
               </p>
+              <ion-badge color="primary" mode="md">{{linea.categoria | uppercase}}</ion-badge>
             </ion-label>
             <ion-button (click)="verlinea(linea.id)">
               ver linea

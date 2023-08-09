@@ -39,18 +39,17 @@ export class EditarLineaComponent implements OnInit {
       nombre: ['', [Validators.required]],
       horainicio: ['', []],
       horafin: ['', []],
-      direccion: ['', [Validators.required]],
+      icono: ['', [Validators.required]],
+      categoria:['',[Validators.required]],
       parada1: this.fb.group({
         nombre: ['', [Validators.required]],
         lng: ['', [Validators.required]],
         lat: ['', [Validators.required]],
-        img: ['', [Validators.required]]
       }),
       parada2: this.fb.group({
         nombre: ['', [Validators.required]],
         lng: ['', [Validators.required]],
         lat: ['', [Validators.required]],
-        img: ['', [Validators.required]]
       }),
       ruta1: this.fb.group({
         detalle: ['', [Validators.required]],
@@ -68,7 +67,8 @@ export class EditarLineaComponent implements OnInit {
       horainicio: format(parse(linea.horainicio, 'h:mm a', new Date()), "yyyy-MM-dd'T'HH:mm:ss"),
       horafin: format(parse(linea.horafin, 'h:mm a', new Date()), "yyyy-MM-dd'T'HH:mm:ss"),
       nombre: linea.nombre,
-      direccion: linea.direccion
+      icono: linea.icono,
+      categoria:linea.categoria
     });
     this.formLinea.get('parada1')?.patchValue(linea.parada1);
     this.formLinea.get('parada2')?.patchValue(linea.parada2);

@@ -17,7 +17,7 @@ import { linea_transporte } from 'src/app/core/interfaces/linea.interface';
 export class AdmrutasPageComponent implements OnInit {
 
   public formLinea: FormGroup;
-  constructor(private _rutas: RutasService, private platform: Platform, private fb: FormBuilder, private modalCtrl: ModalController) {
+  constructor(private fb: FormBuilder, private modalCtrl: ModalController) {
     this.formLinea = new FormGroup('');
   }
   ngOnInit() {
@@ -32,18 +32,17 @@ export class AdmrutasPageComponent implements OnInit {
       nombre: ['', [Validators.required]],
       horainicio: ['', []],
       horafin: ['', []],
-      direccion: ['', [Validators.required]],
+      icono: ['', [Validators.required]],
+      categoria:['',[Validators.required]],
       parada1: this.fb.group({
         nombre: ['', [Validators.required]],
         lng: ['', [Validators.required]],
         lat: ['', [Validators.required]],
-        img: ['', [Validators.required]]
       }),
       parada2: this.fb.group({
         nombre: ['', [Validators.required]],
         lng: ['', [Validators.required]],
         lat: ['', [Validators.required]],
-        img: ['', [Validators.required]]
       }),
       ruta1: this.fb.group({
         detalle: ['', [Validators.required]],
@@ -74,16 +73,23 @@ export class AdmrutasPageComponent implements OnInit {
     return mod;
   }
   async openMapaPuntos(tipo: string) {
+    const linea = this.formLinea.getRawValue();
+    let parada:any={};
+    if (tipo === 'p1') {
+      parada = linea.parada1
+    } else {
+      parada = linea.parada2
+    }
     const modal = await this.modalCtrl.create({
       component: MapaPuntosModalComponent,
-      componentProps: { 
-        parada:{
+      componentProps: {
+        parada: {
           tipo,
-          coords:{
-            lat:'',
-            lng:''
+          coords: {
+            lat: parada.lat,
+            lng: parada.lng
           }
-        } 
+        }
       }
     });
     await modal.present();
@@ -99,19 +105,25 @@ export class AdmrutasPageComponent implements OnInit {
     }
   }
   async openMapaRutas(ruta: string) {
-    const linea=this.formLinea.getRawValue();
+    const linea = this.formLinea.getRawValue();
+    let coordinates = [];
+    if (ruta === 'r1') {
+      coordinates = linea.ruta1.coordinates
+    } else {
+      coordinates = linea.ruta2.coordinates
+    }
     const modal = await this.modalCtrl.create({
       component: MapaRutasModalComponent,
-      componentProps: { 
+      componentProps: {
         ruta,
-        parada1:linea.parada1,
-        parada2:linea.parada2
+        parada1: linea.parada1,
+        parada2: linea.parada2,
+        coordenadas: coordinates
       }
     });
     await modal.present();
     const { data, role } = await modal.onWillDismiss();
     if (role === 'confirm') {
-      console.log(data, 'llego esta ruta desde el modal');
       if (data.ruta == 'r1') {
         this.formLinea.get('ruta1.coordinates')?.patchValue(data.rutas);
       } else {

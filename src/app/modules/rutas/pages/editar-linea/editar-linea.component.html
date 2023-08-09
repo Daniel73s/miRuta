@@ -3,7 +3,7 @@
     <form [formGroup]="formLinea">
       <!-- primera fila -->
       <ion-row>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
           <ion-item>
             <ion-label position="stacked">Id (Autogenerado)</ion-label>
             <ion-input formControlName="id" readonly></ion-input>
@@ -12,10 +12,19 @@
             </ion-button>
           </ion-item>
         </ion-col>
-        <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
           <ion-item>
             <ion-label position="stacked">Nombre Linea</ion-label>
             <ion-input formControlName="nombre" placeholder="ingrese solo el nombre de la linea"></ion-input>
+          </ion-item>
+        </ion-col>
+        <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
+          <ion-item>
+            <ion-label>Categoria</ion-label>
+            <ion-select placeholder="elegir categoria" slot="end" formControlName="categoria">
+              <ion-select-option value="micro">Micro</ion-select-option>
+              <ion-select-option value="taxi-trufi">Taxi-trufi</ion-select-option>
+            </ion-select>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -52,10 +61,12 @@
         </ion-col>
         <ion-col size-xs="12" size-sm="12" size-md="4" size-lg="4">
           <ion-item>
-            <ion-label>Direccion</ion-label>
-            <ion-select placeholder="Direccion" slot="end" formControlName="direccion">
+            <ion-label>Icono</ion-label>
+            <ion-select placeholder="Elegir icono" slot="end" formControlName="icono">
               <ion-select-option value="arrow">Arrow</ion-select-option>
               <ion-select-option value="arrow-2">Arrow-2</ion-select-option>
+              <ion-select-option value="arrow-3">Arrow-3</ion-select-option>
+              <ion-select-option value="arrow-4">Arrow-4</ion-select-option>
             </ion-select>
           </ion-item>
         </ion-col>
@@ -70,16 +81,10 @@
                 <ion-button (click)="openModalPuntos('p1')">modificar punto</ion-button>
               </ion-list-header>
               <ion-row>
-                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
                   <ion-item>
                     <ion-label position="stacked">Nombre de parada:</ion-label>
                     <ion-input formControlName="nombre" placeholder="Nombre de parada 1"></ion-input>
-                  </ion-item>
-                </ion-col>
-                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-                  <ion-item>
-                    <ion-label position="stacked">Url de imagen:</ion-label>
-                    <ion-input formControlName="img" placeholder="Link de imagen"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>
@@ -111,16 +116,10 @@
                 <ion-button (click)="openModalPuntos('p2')">modificar punto</ion-button>
               </ion-list-header>
               <ion-row>
-                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
+                <ion-col size-xs="12" size-sm="12" size-md="12" size-lg="12">
                   <ion-item>
                     <ion-label position="stacked">Nombre de parada:</ion-label>
                     <ion-input formControlName="nombre" placeholder="Nombre de parada 2"></ion-input>
-                  </ion-item>
-                </ion-col>
-                <ion-col size-xs="12" size-sm="12" size-md="6" size-lg="6">
-                  <ion-item>
-                    <ion-label position="stacked">Url de imagen:</ion-label>
-                    <ion-input formControlName="img" placeholder="Link de imagen"></ion-input>
                   </ion-item>
                 </ion-col>
               </ion-row>

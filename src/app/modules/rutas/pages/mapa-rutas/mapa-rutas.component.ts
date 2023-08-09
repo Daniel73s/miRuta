@@ -45,9 +45,9 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
     });
     this.map.on('style.load', () => {
       if (this.idRuta == 1) {
-        this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
+        this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.icono);
       } else {
-        this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.direccion);
+        this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.icono);
       }
     });
   }
@@ -103,7 +103,6 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
     const popup = new mapboxgl.Popup().setHTML(
       `
       <div class="ion-text-center">
-      <img src="${parada.img}"/>
       <h3 style="color:'#000';">${parada.nombre}</h3>
       </div>
     `
@@ -113,11 +112,11 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   public cambiarRuta() {
     if (this.idRuta === 1) {
       this.deleteLine(this.idRuta);
-      this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.direccion);
+      this.graficarRuta(this.linea.ruta2, 2, '#5260ff', this.linea.icono);
       this.idRuta = 2;
     } else {
       this.deleteLine(this.idRuta);
-      this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.direccion);
+      this.graficarRuta(this.linea.ruta1, 1, '#5260ff', this.linea.icono);
       this.idRuta = 1;
     }
   }
@@ -163,7 +162,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
     this.watchId = Geolocation.watchPosition({ enableHighAccuracy: true }, (position: any) => {
       const { latitude, longitude } = position.coords;
       // Actualiza el mapa para centrar la ubicación en tiempo real
-      this.map.flyTo({ center: [longitude, latitude] });
+      // this.map.flyTo({ center: [longitude, latitude] });
       // Agrega o actualiza el marcador de la ubicación
       this.updateLocationMarker([longitude, latitude]);
     });
@@ -225,7 +224,6 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.stopTrackingLocation();
   }
-
   async mensaje(message: string) {
     const toast = await this.toastCtrl.create({
       message,
@@ -233,11 +231,9 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
     });
     toast.present();
   }
-
   changeStyleMap(mode: string) {
     this.map.setStyle(mode);
   }
-
   async presentActionSheet() {
     const actionSheet = await this.actionSheetCtrl.create({
       header: 'Cambiar Mapa',

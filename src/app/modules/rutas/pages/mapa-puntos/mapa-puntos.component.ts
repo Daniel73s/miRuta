@@ -29,6 +29,7 @@ export class MapaPuntosComponent implements OnInit {
       style: 'mapbox://sprites/mapbox/outdoors-v12',
       zoom: 13,
       center: [this.parada.lng, this.parada.lat],
+      pitch: 45
     });
     this.map.on('load', () => {
       this.map.resize();
@@ -36,8 +37,7 @@ export class MapaPuntosComponent implements OnInit {
       const Popup = new mapboxgl.Popup().setHTML(
         `
           <div class="ion-text-center">
-          <img src="${this.parada.img}"/>
-          <h3>${this.parada.nombre}</h3>
+          <h3>${this.parada.nombre.toUpperCase()}</h3>
           </div>
         `
       );
@@ -55,14 +55,14 @@ export class MapaPuntosComponent implements OnInit {
           },
         },
       });
-
+      //agregando el layer del circulo
       this.map.addLayer({
         id: 'wave',
         type: 'circle',
         source: 'location-source',
         paint: {
           'circle-radius': 50,
-          'circle-opacity': 0.5,
+          'circle-opacity': 0.3,
           'circle-color': '#7B47F4',
         },
       });

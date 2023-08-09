@@ -127,7 +127,6 @@ export class MapaRutasModalComponent implements OnInit {
       .setPopup(new this.mapbox.Popup().setHTML(
         `
         <div class="ion-text-center">
-        <img src="${parada.img}"/>
         <h3 style="color:'#000';">${parada.nombre}</h3>
         </div>
       `
