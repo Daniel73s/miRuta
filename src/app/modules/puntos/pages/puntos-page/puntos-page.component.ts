@@ -15,48 +15,61 @@ export class PuntosPageComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this._puntosService.crearMapa('map');
     this.cargarInfo();
+    this._puntosService.map.on('click', (event: any) => {
+      const { lat, lng } = event.lngLat;
+      // this.calcularRuta([lng, lat]);
+      this.ubicacion([lng, lat])
+    });
   }
 
   cargarInfo() {
     //Creando el elemento div y adicionandole css
     this.subscription = this._puntosService.cargarData().subscribe((resp: any) => {
-
-
       resp.puntos.forEach((item: any) => {
         const element = this.renderer.createElement('div');
         this.renderer.addClass(element, 'marker'),
           this.renderer.setStyle(element, 'backgroundImage', `url(${item.imagen})`);
-        this.renderer.setStyle(element, 'width', '50px');
-        this.renderer.setStyle(element, 'height', '50px');
-        this.renderer.setStyle(element, 'backgroundSize', '100%');
-
         // creando el marker
-        let marker = this._puntosService.createMarker(element, item.geojson.geometry.coordinates);
+        let marker = this._puntosService.createMarker(element, item.coordinates);
         //creando el popup
         let popup = this._puntosService.createPopUp().setHTML(`
-       <div class="content">
-         <h3 class="popup-title">${item.nombre}</h3>
+        <div class="content-popup">
+         <h3>${item.nombre}</h3>
          <img src="${item.imagen}" alt="Imagen del Popup">
-         <ion-button id="btn">ver mas </ion-button>
-         <input type:"text" id="idvalue" value="${item.id}" style="display: none;" />
-       </div>
+        </div>
        `)
-      //  añadiendo el popup al marker 
+        //  añadiendo el popup al marker 
         marker.setPopup(popup);
-
-        popup.on('open',()=>{
-          const btn=document.getElementById('btn');
-          const input=document.getElementById('idvalue') as HTMLInputElement;
-          btn?.addEventListener('click',()=>{
-            console.log('hizo click en el boton '+ input.value);
-            
-          })
-        })
-
       });
-
-
     });
+  }
+
+  private calcularRuta(origen: [number, number], destino: [number, number]) {
+    this._puntosService.calcularDistanciaTurf(origen, destino)
+      .then((response: any) => response.json()
+      ).then((data) => {
+        this._puntosService.printLine(data.routes[0].geometry.coordinates)
+        // console.log(data.routes[0].geometry.coordinates);
+        // console.log(data.routes[0].distance,'kilometros');
+        // console.log((data.routes[0].duration)/60,'minutos');
+      });
+  }
+
+  private ubicacion(destino: [number, number]) {
+
+    this._puntosService.checkPermisos().then(() => {
+      this._puntosService.solicitarPermisos().then(result => {
+        if (result.location == 'granted') {
+          this._puntosService.location().then(coordinates => {
+            const { latitude, longitude } = coordinates.coords;
+            this._puntosService.createMarker(null, [longitude, latitude]);
+            this.calcularRuta([longitude, latitude], destino)
+          })
+        } else if (result.location == 'denied') {
+          console.log('se denego el permiso de ubicacion');
+        }
+      })
+    })
   }
 
   vermas() {

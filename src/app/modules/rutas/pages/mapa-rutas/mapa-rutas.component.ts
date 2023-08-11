@@ -36,7 +36,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
       style: 'mapbox://styles/mapbox/streets-v12',
       zoom: 11,
       center: [-64.73094404403551, -21.529315024171897],
-      pitch: 45
+      pitch: 0
     });
     this.map.on('load', () => {
       this.map.resize();
@@ -165,6 +165,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
       // this.map.flyTo({ center: [longitude, latitude] });
       // Agrega o actualiza el marcador de la ubicación
       this.updateLocationMarker([longitude, latitude]);
+      this.updateMapOrientation(position.coords.heading)
     });
   }
   private updateLocationMarker(coordinates: [number, number]) {
@@ -274,4 +275,12 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
 
     await actionSheet.present();
   }
+  private updateMapOrientation(heading:any){
+    console.log('valor del heading',heading);
+    
+    // this.map.easeTo({
+    //   bearing: heading,
+    //   pitch: 0,
+    // });
+  };
 }

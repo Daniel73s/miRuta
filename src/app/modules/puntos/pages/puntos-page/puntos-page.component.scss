@@ -5,11 +5,14 @@
 
 .marker {
     display: block;
-    border: none;
     border-radius: 50%;
+    border: 3px solid white;
     cursor: pointer;
     padding: 0;
+    width: 50px;
+    height: 50px;
+    background-size: 100%;
+    // clip-path: polygon(50% 0%, 100% 100%, 0% 100%); /* Forma triangular */
+    // clip-path: polygon(50% 0%, 100% 60%, 70% 100%, 30% 100%, 0% 60%);
 }
-
-
   

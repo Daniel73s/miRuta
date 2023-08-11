@@ -1,8 +1,8 @@
-import { Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 import * as mapboxgl from 'mapbox-gl';
 import * as turf from '@turf/turf';
 import { environment } from 'src/environments/environment';
-import { Geolocation,PermissionStatus } from '@capacitor/geolocation';
+import { Geolocation, PermissionStatus } from '@capacitor/geolocation';
 @Injectable({
   providedIn: 'root'
 })
@@ -143,6 +143,8 @@ export class MapboxService {
     const distanceTurf = turf.length(line, { units: 'kilometers' });
     return { distanceTurf, route }
   }
+
+
 
   async solicitarPermiso(): Promise<PermissionStatus> {
     const result = await Geolocation.requestPermissions();
