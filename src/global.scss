@@ -24,7 +24,14 @@
 @import "~@ionic/angular/css/text-alignment.css";
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
+//heebo
+// @import url('https://fonts.googleapis.com/css2?family=Heebo:wght@300;400&display=swap');
 
+// lato
+@import url('https://fonts.googleapis.com/css2?family=Lato:wght@100;300;400&display=swap');
+* {
+  font-family: 'lato', sans-serif;
+}
 
 @media (width >=800px) {
   ion-modal {
@@ -35,8 +42,11 @@
   }
 }
 
+
+
 .content-popup {
   position: relative;
+
   h3 {
     left: 5px;
     position: absolute;
@@ -44,9 +54,10 @@
     background-color: rgba(19, 1, 1, 0.368);
     color: rgb(245, 245, 245);
     padding: 5px;
-    text-transform:capitalize;
+    text-transform: capitalize;
   }
-  img{
+
+  img {
     width: 200px;
     height: 200px;
     object-fit: cover;

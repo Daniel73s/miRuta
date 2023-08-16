@@ -1,39 +1,41 @@
 {
     "puntos": [
         {
-            "id":"100-p",
+            "id": "100-p",
             "nombre": "Iglesia San roque",
-            "imagen": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJnQCL6Lhwva-237Rm40-Rm9YSJ_mtqRZIw&usqp=CAU",
-            "coordinates": [
-                -64.73309217058429,-21.529347999467873
-            ]
+            "imagenURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJnQCL6Lhwva-237Rm40-Rm9YSJ_mtqRZIw&usqp=CAU",
+            "coordinates": {
+                "lng": -64.73309217058429,
+                "lat": -21.529347999467873
+            }
         },
         {
-            "id":"101-p",
+            "id": "101-p",
             "nombre": "Tomatitas",
-            "imagen": "https://elpais.bo/img/images_1200/contents/2014/11/18/40c8c7c209f2356df4a9f991ba405e7f_XL.jpg",
-            "coordinates": [
-                -64.76239230479158,
-                -21.499112075797658
-            ]
+            "imagenURL": "https://elpais.bo/img/images_1200/contents/2014/11/18/40c8c7c209f2356df4a9f991ba405e7f_XL.jpg",
+            "coordinates": {
+                "lng": -64.76239230479158,
+                "lat": -21.499112075797658
+            }
         },
         {
-            "id":"102-p",
+            "id": "102-p",
             "nombre": "coimata",
-            "imagen": "https://static.wixstatic.com/media/b07e59_4a819316599748558806821f4dbeebf0.jpg/v1/fill/w_250,h_307,al_c,q_90,enc_auto/b07e59_4a819316599748558806821f4dbeebf0.jpg",
-            "coordinates": [
-                -64.80923817383908,
-                -21.49544509624281
-            ]
+            "imagenURL": "https://static.wixstatic.com/media/b07e59_4a819316599748558806821f4dbeebf0.jpg/v1/fill/w_250,h_307,al_c,q_90,enc_auto/b07e59_4a819316599748558806821f4dbeebf0.jpg",
+            "coordinates": {
+                "lng": -64.80923817383908,
+                "lat": -21.49544509624281
+            }
         },
         {
-            "id":"103-p",
+            "id": "103-p",
             "nombre": "Mirador de los sueños",
-            "imagen": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/ac/93/15/getlstd-property-photo.jpg?w=1200&h=-1&s=1",
-            "coordinates": [
-                -64.74382901715381, -21.534357990901213
-            ]
+            "imagenURL": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/ac/93/15/getlstd-property-photo.jpg?w=1200&h=-1&s=1",
+            "coordinates": {
+               "lng": -64.74382901715381,
+               "lat": -21.534357990901213
+            }
+            
         }
-
     ]
 }

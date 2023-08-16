@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 //componentes
 import { PuntosPageComponent } from './pages/puntos-page/puntos-page.component';
 import { DetallePuntoPageComponent } from './pages/detalle-punto-page/detalle-punto-page.component';
+import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -15,7 +16,8 @@ import { DetallePuntoPageComponent } from './pages/detalle-punto-page/detalle-pu
     CommonModule,
     PuntosRoutingModule,
     HttpClientModule,
-    IonicModule
+    IonicModule,
+    FormsModule
   ]
 })
 export class PuntosModule { }

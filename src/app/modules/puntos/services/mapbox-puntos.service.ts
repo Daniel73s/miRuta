@@ -5,6 +5,7 @@ import { environment } from 'src/environments/environment';
 import * as turf from '@turf/turf';
 import { HttpClient } from '@angular/common/http';
 import { Geolocation } from '@capacitor/geolocation';
+import { Punto } from 'src/app/core/interfaces/punto.interface';
 @Injectable({
   providedIn: 'root'
 })
@@ -16,6 +17,7 @@ export class MapboxPuntosService {
   }
 
   crearMapa(idmap: string) {
+    // mapbox://styles/mapbox/streets-v12
     this.map = new mapboxgl.Map({
       container: idmap,
       style: 'mapbox://styles/mapbox/satellite-streets-v12',
@@ -28,18 +30,18 @@ export class MapboxPuntosService {
 
   }
 
-  public cargarData() {
-    return this.httpclient.get('./assets/rutas/puntos.json')
+  public async cargarData():Promise<Punto[]> {
+    const data:any = await this.httpclient.get('./assets/rutas/puntos.json').toPromise();
+    return data.puntos as Punto[];
   }
 
-  public calcularDistanciaTurf(origen: any, destino: any) {
+  public calcularRuta(origen: any, destino: any) {
     const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origen[0]},${origen[1]};${destino[0]},${destino[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`;
     return fetch(`${apiUrl}`, { method: 'GET' })
   }
 
-  public createMarker(element: any, coordinates: any) {
-
-    return new mapboxgl.Marker({ element }).setLngLat(coordinates).addTo(this.map)
+  public createMarker(element: any, coordinates:[number,number]) {
+    return new mapboxgl.Marker({ element }).setLngLat(coordinates).addTo(this.map);
   }
 
   public printLine(coordinates: any) {
@@ -111,4 +113,19 @@ export class MapboxPuntosService {
   public solicitarPermisos(){
     return Geolocation.requestPermissions({ permissions: ['location'] })
   }
+
+  public deleteMarker(marker:mapboxgl.Marker){
+        marker.remove();
+  }
+
+  public deleteLine(){
+    if (this.map.getLayer('layerLinea')) {
+      this.map.removeLayer(`layerLinea`);
+      this.map.removeLayer(`arrow-layer`);
+      this.map.removeImage(`arrow-id`);
+      this.map.removeSource(`ruta`);
+    }
+  }
+
+
 }
