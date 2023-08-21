@@ -24,23 +24,25 @@ export class MapboxPuntosService {
       zoom: 13,
       center: [-64.73349858433076, -21.53250712718626],
     });
+    this.map.addControl(new mapboxgl.NavigationControl());
+
     this.map.on('load', () => {
-      this.map.resize();
-    });
+        this.map.resize();
+      });
 
   }
 
-  public async cargarData():Promise<Punto[]> {
-    const data:any = await this.httpclient.get('./assets/rutas/puntos.json').toPromise();
+  public async cargarData(): Promise<Punto[]> {
+    const data: any = await this.httpclient.get('./assets/rutas/puntos.json').toPromise();
     return data.puntos as Punto[];
   }
 
-  public calcularRuta(origen: any, destino: any) {
-    const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/driving/${origen[0]},${origen[1]};${destino[0]},${destino[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`;
+  public calcularRuta(origen: any, destino: any, direction: string) {
+    const apiUrl = `https://api.mapbox.com/directions/v5/mapbox/${direction}/${origen[0]},${origen[1]};${destino[0]},${destino[1]}?steps=true&geometries=geojson&access_token=${mapboxgl.accessToken}`;
     return fetch(`${apiUrl}`, { method: 'GET' })
   }
 
-  public createMarker(element: any, coordinates:[number,number]) {
+  public createMarker(element: any, coordinates: [number, number]) {
     return new mapboxgl.Marker({ element }).setLngLat(coordinates).addTo(this.map);
   }
 
@@ -79,7 +81,8 @@ export class MapboxPuntosService {
           },
           paint: {
             'line-color': '#7B47F4',
-            'line-width': 5,
+            'line-width': 10,
+            'line-blur': 1
           },
         });
         //mostrando el icono 
@@ -104,21 +107,21 @@ export class MapboxPuntosService {
   }
 
   public location() {
-   return Geolocation.getCurrentPosition({ enableHighAccuracy: true })
+    return Geolocation.getCurrentPosition({ enableHighAccuracy: true })
   }
-  public checkPermisos(){
-   return Geolocation.checkPermissions()
+  public checkPermisos() {
+    return Geolocation.checkPermissions()
   }
 
-  public solicitarPermisos(){
+  public solicitarPermisos() {
     return Geolocation.requestPermissions({ permissions: ['location'] })
   }
 
-  public deleteMarker(marker:mapboxgl.Marker){
-        marker.remove();
+  public deleteMarker(marker: mapboxgl.Marker) {
+    marker.remove();
   }
 
-  public deleteLine(){
+  public deleteLine() {
     if (this.map.getLayer('layerLinea')) {
       this.map.removeLayer(`layerLinea`);
       this.map.removeLayer(`arrow-layer`);
