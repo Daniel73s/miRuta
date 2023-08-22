@@ -4,6 +4,8 @@ import * as mapboxgl from 'mapbox-gl';
 import { Geolocation } from '@capacitor/geolocation';
 import { environment } from 'src/environments/environment';
 import { Parada, Ruta, linea_transporte } from 'src/app/core/interfaces/linea.interface';
+import { LineasService } from '../../services/lineas.service';
+import { Punto } from 'src/app/core/interfaces/punto.interface';
 @Component({
   selector: 'app-mapa-rutas',
   templateUrl: './mapa-rutas.component.html',
@@ -17,17 +19,22 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
   private idRuta = 1;
   private watchId: any;
   private loading: any;
-  constructor(private modalCtrl: ModalController,
+  constructor(
+    private modalCtrl: ModalController,
     private render: Renderer2,
     private loadingCtrl: LoadingController,
     private toastCtrl: ToastController,
-    private actionSheetCtrl: ActionSheetController) { this.mapbox.accessToken = environment.KeyMapBox; }
+    private actionSheetCtrl: ActionSheetController,
+    private _lineasService: LineasService) {
+    this.mapbox.accessToken = environment.KeyMapBox;
+  }
 
   ngOnInit() {
     this.ubicacion();
     // this.trackLocation();
     // this.location();
     this.generarMapa();
+    this.printPuntos();
   }
   //metodo para inicializar el mapa
   private generarMapa() {
@@ -80,7 +87,7 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
           },
           paint: {
             'line-color': color,
-            'line-width': 5,
+            'line-width': 10,
           },
         });
         //mostrando el icono 
@@ -97,6 +104,8 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
         });
       }
     );
+
+    this.zoomRuta(ruta.coordinates);
   }
   private graficarParada(parada: Parada) {
     const marker = new mapboxgl.Marker().setLngLat([parada.lng, parada.lat]).addTo(this.map);
@@ -275,12 +284,35 @@ export class MapaRutasComponent implements OnInit, OnDestroy {
 
     await actionSheet.present();
   }
-  private updateMapOrientation(heading:any){
-    console.log('valor del heading',heading);
-    
+  private updateMapOrientation(heading: any) {
+    console.log('valor del heading', heading);
+
     // this.map.easeTo({
     //   bearing: heading,
     //   pitch: 0,
     // });
   };
+
+  private printPuntos() {
+    this.linea.ruta1.puntos.forEach((item: any) => {
+      this._lineasService.getPunto(item).then((item: Punto) => {
+        const element = this.render.createElement('div');
+        this.render.addClass(element, 'element');
+        this.render.setStyle(element, 'backgroundImage', `url(${item.imagenURL})`)
+        new mapboxgl.Marker({ element })
+          .setLngLat([item.coordinates.lng, item.coordinates.lat])
+          .setPopup(new mapboxgl.Popup({ closeButton: false }).setText(item.nombre.toUpperCase()))
+          .addTo(this.map)
+      });
+    })
+  }
+  private zoomRuta(coordinates:any) {
+    const bounds = new mapboxgl.LngLatBounds(
+      coordinates[0],
+      coordinates[coordinates.length-1]
+    );
+    this.map.fitBounds(bounds, {
+      padding:30
+    });
+  }
 }

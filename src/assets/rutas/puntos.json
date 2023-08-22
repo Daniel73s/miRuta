@@ -1,7 +1,7 @@
 {
     "puntos": [
         {
-            "id": "100-p",
+            "id": "p-100",
             "nombre": "Iglesia San roque",
             "imagenURL": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSaJnQCL6Lhwva-237Rm40-Rm9YSJ_mtqRZIw&usqp=CAU",
             "coordinates": {
@@ -10,7 +10,7 @@
             }
         },
         {
-            "id": "101-p",
+            "id": "p-101",
             "nombre": "Tomatitas",
             "imagenURL": "https://elpais.bo/img/images_1200/contents/2014/11/18/40c8c7c209f2356df4a9f991ba405e7f_XL.jpg",
             "coordinates": {
@@ -19,7 +19,7 @@
             }
         },
         {
-            "id": "102-p",
+            "id": "p-102",
             "nombre": "coimata",
             "imagenURL": "https://static.wixstatic.com/media/b07e59_4a819316599748558806821f4dbeebf0.jpg/v1/fill/w_250,h_307,al_c,q_90,enc_auto/b07e59_4a819316599748558806821f4dbeebf0.jpg",
             "coordinates": {
@@ -28,7 +28,7 @@
             }
         },
         {
-            "id": "103-p",
+            "id": "p-103",
             "nombre": "Mirador de los sueños",
             "imagenURL": "https://dynamic-media-cdn.tripadvisor.com/media/photo-o/09/ac/93/15/getlstd-property-photo.jpg?w=1200&h=-1&s=1",
             "coordinates": {
@@ -36,6 +36,15 @@
                "lat": -21.534357990901213
             }
             
+        },
+        {
+            "id":"p-104",
+            "nombre":"ex-terminal",
+            "imagenURL":"https://elpais.bo/img/images_1200/galleries/39/4f36ab8a-dd87-4ba0-8cb8-3450900f026d.jpg",
+            "coordinates":{
+                "lng":-64.72505831053704,
+                "lat":-21.54169533084371
+            }
         }
     ]
 }

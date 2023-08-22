@@ -20,16 +20,17 @@ export class MapboxPuntosService {
     // mapbox://styles/mapbox/streets-v12
     this.map = new mapboxgl.Map({
       container: idmap,
-      style: 'mapbox://styles/mapbox/satellite-streets-v12',
-      zoom: 13,
+      style: 'mapbox://styles/mapbox/streets-v12',
+      zoom: 11.5,
       center: [-64.73349858433076, -21.53250712718626],
+      pitch:60
     });
     this.map.addControl(new mapboxgl.NavigationControl());
 
     this.map.on('load', () => {
-        this.map.resize();
-      });
+      this.map.resize();
 
+    });
   }
 
   public async cargarData(): Promise<Punto[]> {
@@ -54,6 +55,7 @@ export class MapboxPuntosService {
       this.map.removeImage(`arrow-id`);
       this.map.removeSource(`ruta`);
     }
+
     this.map.loadImage(
       `assets/icon/arrow.png`,
       (error: any, image: any) => {
@@ -99,6 +101,7 @@ export class MapboxPuntosService {
         });
       }
     );
+    this.zoomRuta(coordinates);
   }
 
   public createPopUp() {
@@ -128,6 +131,29 @@ export class MapboxPuntosService {
       this.map.removeImage(`arrow-id`);
       this.map.removeSource(`ruta`);
     }
+  }
+
+  private zoomRuta(coordinates: any) {
+    // Create a 'LngLatBounds' with both corners at the first coordinate.
+    const bounds = new mapboxgl.LngLatBounds(
+      coordinates[0],
+      coordinates[(coordinates.length) - 1]
+    );
+    for (const coord of coordinates) {
+      bounds.extend(coord);
+    }
+
+    this.map.fitBounds(bounds, {
+      padding: {
+        top: 60,
+        bottom: 100,
+        left: 40,
+        right: 40
+      }
+    });
+  }
+  public deletePopup(popup: mapboxgl.Popup) {
+    popup.remove();
   }
 
 

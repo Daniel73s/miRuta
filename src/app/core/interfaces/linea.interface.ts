@@ -20,4 +20,5 @@ export interface Parada {
 export interface Ruta {
     detalle: string;
     coordinates: Array<number[]>;
+    puntos:Array<string[]>
 }

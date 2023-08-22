@@ -23,6 +23,7 @@ export class DetallesComponent implements OnInit {
     const id: string | null = this.route.snapshot.paramMap.get('id');
     this._lineas.getlineas().then((linea:linea_transporte[]) => {
       this.detalle_linea = linea.find((l: linea_transporte) => l.id === id);
+      console.log(this.detalle_linea);
     });
   }
 
